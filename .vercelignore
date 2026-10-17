@@ -1,0 +1,11 @@
+node_modules
+botTronix-frontend/node_modules
+botTronix-frontend/.vite
+botTronix-backend/__pycache__
+botTronix-backend/app/**/__pycache__
+botTronix-backend/migrations/__pycache__
+.bt_prod_tmp
+.env.production
+appDoc_unpacked
+findings
+botTronix-tests

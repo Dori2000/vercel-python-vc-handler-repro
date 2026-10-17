@@ -1,0 +1,58 @@
+{
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxDuration": 60
+      }
+    },
+    {
+      "src": "botTronix-frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "api/index.py" },
+    { "src": "/assets/(.*)", "dest": "/botTronix-frontend/assets/$1" },
+    { "src": "/favicon.svg", "dest": "/botTronix-frontend/favicon.svg" },
+    { "src": "/widget.js", "dest": "/botTronix-frontend/widget.js" },
+    { "src": "/robots.txt", "dest": "/botTronix-frontend/robots.txt" },
+    { "src": "/sitemap.xml", "dest": "/botTronix-frontend/sitemap.xml" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/botTronix-frontend/index.html" }
+  ],
+  "crons": [
+    {
+      "path": "/api/v1/webhooks/gmail/renew-watches",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/v1/webhooks/outlook/renew-subscriptions",
+      "schedule": "0 */12 * * *"
+    },
+    {
+      "path": "/api/v1/internal/training/drain",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/v1/internal/billing/reconcile",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/v1/internal/notifications/email-drain",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/v1/internal/booking/sweep",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/v1/internal/retention/purge",
+      "schedule": "0 4 * * *"
+    }
+  ]
+}
